@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+</head>
+<style>
+    
+body{margin-top:20px; background-color: #171719;}
+
+.well-social-post {
+  border-radius: 0;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  padding:0;
+}
+
+.well-social-post .glyphicon,
+.well-social-post .fa,
+.well-social-post [class^='icon-'],
+.well-social-post [class*='icon-'] {
+  font-weight: bold;
+  color: #999999;
+}
+
+.well-social-post a,
+.well-social-post a:hover,
+.well-social-post a:active,
+.well-social-post a:focus {
+  text-decoration: none;
+}
+
+.well-social-post .list-inline {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.well-social-post .list-inline li {
+  position: relative;
+}
+
+.well-social-post .list-inline li.active::after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  content: "";
+  top: 30px;
+  left: 50%;
+  left: -webkit-calc(50% - 5px);
+  left: -moz-calc(50%-5px);
+  left: calc(50% - 5px);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #dddddd;
+}
+
+.well-social-post .list-inline li.active a {
+  color: #222222;
+  font-weight: bold;
+}
+
+.well-social-post .form-control {
+  width: 100%;
+  min-height: 100px;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.well-social-post .list-inline {
+  padding: 10px;
+}
+
+.well-social-post .list-inline li + li {
+  margin-left: 10px;
+}
+
+.well-social-post .post-actions {
+  margin: 0;
+  background-color: #f6f7f8;
+  border-top-color: #e9eaed;
+}                  
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+  background-color: #0066ff;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.nav__links a,
+.cta,
+.overlay__content a {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+
+
+.cta {
+  padding: 9px 25px;
+  background-color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease 0s;
+}
+
+.cta:hover {
+  background-color: rgba(238, 238, 238, 0.8);
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+/* Mobile Nav */
+
+.menu {
+  display: none;
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: #24252a;
+  overflow-x: hidden;
+  transition: width 0.5s ease 0s;
+}
+
+.overlay--active {
+  width: 100%;
+}
+
+
+
+.overlay .close {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+  color: #edf0f1;
+}
+
+@media screen and (max-height: 450px) {
+  .overlay a {
+    font-size: 20px;
+  }
+  .overlay .close {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .nav__links,
+  .cta {
+    display: none;
+  }
+  .menu {
+    display: initial;
+  }
+}                                          
+</style>
+<body>
+  <header>
+    <a class="logo text-5xl text-white " href="#">Logo</a>
+    <nav>
+      <ul class="nav__links">
+        
+      </ul>
+    </nav>
+    <a class="cta" href="/logout">Logout</a>
+    <p class="menu cta">Menú</p>
+  </header>
+  <div class="overlay">
+    <a class="close">&times;</a>
+    <div class="overlay__content">
+      
+    </div>
+  </div>
+    
+    <div class="container ">
+        <div class="row">
+          <div class="col-md mt-20  col-md-6 col-xs-12">
+            <div class="flex item-start gap-4">
+            <div class="w-20 h-20 rounded-md">
+              <img class="w-full h-full object-cover overlay-hidden" src="/Images/upload/<%= user.profilepic %>" alt="">
+            </div>
+            <h1 class="text-3xl p-5 text-white">Hellow <%= user.name %>😊</h1>
+          </div>
+            <div class="well mt-10 well-sm well-social-post">
+                
+              <form action="/post" method="post">
+                
+                <ul class="list-inline" id='list_PostActions'>
+                  <li class='active'><a href='#'>Create a new Post</a></li>
+                  <!-- <li><a href='#'>Add photos/Video</a></li>
+                  <li><a href='#'>Create photo album</a></li> -->
+                </ul>
+                <textarea class="form-control" name="content" placeholder="What's in your mind?"></textarea>
+                <ul class='list-inline post-actions'>
+                  <li><a href="/profile/upload"><span class="glyphicon glyphicon-camera"></span></a></li>
+                  <li><a href="#" class='glyphicon glyphicon-user'></a></li>
+                  <li><a href="#" class='glyphicon glyphicon-map-marker'></a></li>
+                  <!-- <li class='pull-right'><a href="#" class='btn btn-primary btn-xs'>Post</a></li> -->
+                  <input type="submit"  class='btn btn-primary btn-xs pull-right' value="post">
+
+                </ul>
+              </form>
+            </div>
+
+              <div class="posts mt-20">
+                <h3 class="text-zinc-400">Your Posts.</h3>
+                <div class="postcontainer mt-5">
+                  <% user.posts.forEach(function(post){ %>  <!-- ✅ Correct variable name -->
+                    <div class="post rounded-md mb-4 w-full p-6 border-2 border-zinc-700 bg-zinc-800 text-white">
+                        <h4 class="text-blue-500">@<%= user.username %></h4>
+                        <p class="mt-2"><%= post.content %></p>
+                        <small class="mt-4 text-2x3 inline-block"><%= post.likes.length %> likes</small>
+                        <div class="btns flex gap-4 mt-3">
+                          <form action="/like/<%= post._id %>" method="post" style="display: inline;">
+                            <button type="submit" class="text-blue-500 border-none bg-transparent cursor-pointer">
+                                <%= post.likes.indexOf(user._id) === -1 ? 'Like' : 'Unlike' %>
+                            </button>
+                        </form>
+                            <a class="text-zinc-400" href="/edit/<%= post._id %>">Edit</a>
+                        </div>
+                    </div> 
+                <% }) %>
+                
+                    <!-- <div class="post rounded-md mb-4 w-full p-6 border-2 border-zinc-700 bg-zinc-800 text-white">
+                    <h4 class="text-blue-500">@someusername</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. A, error.</p>
+                    <div class="btns flex gap-4 mt-5">
+                        <a class="text-blue-500" href="">Like</a>
+                        <a class="text-zinc-400" href="">edit</a>
+                    </div>
+                </div> -->
+                <!-- <div class="post rounded-md w-full mb-4 p-6 border-2 border-zinc-700 bg-zinc-800 text-white">
+                    <h4 class="text-blue-500">@someusername</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. A, error.</p>
+                    <div class="btns flex gap-4 mt-5">
+                        <a class="text-blue-500" href="">Like</a>
+                        <a class="text-zinc-400" href="">edit</a>
+                    </div>
+                </div> -->
+                </div>
+
+
+              </div>
+           
+          </div>
+        </div>
+                                                         
+</div>
+</body>
+</html>
