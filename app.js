@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const upload = require('./config/multerconfig');
 const path = require('path')
+require("dotenv").config();  // Load .env file
+const PORT = process.env.PORT || 3000;
+
+
 
 
 app.set("view engine", 'ejs')
@@ -31,10 +35,26 @@ app.post('/upload', isLoggedIn, upload.single("image"), async (req, res) => {
     
 })
 app.get('/profile', isLoggedIn, async (req, res) => {
-    let user = await userModel.findOne({email: req.user.email}).populate("posts");// means not give id give post
-   
-    res.render('profile', {user});
+    try {
+        if (!req.user || !req.user.email) {
+            return res.redirect('/login'); // Redirect if user not found
+        }
+
+        let user = await userModel.findOne({ email: req.user.email }).populate("posts");
+
+        // If user is null, send an empty object with default values
+        if (!user) {
+            user = { name: "Guest", profilepic: "default.jpg", posts: [] };
+        }
+
+        res.render('profile', { user });
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
+
+
 app.post('/post', isLoggedIn, async (req, res) => {
     let user = await userModel.findOne({ email: req.user.email });
 
@@ -163,5 +183,6 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-
-app.listen(3000)
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});

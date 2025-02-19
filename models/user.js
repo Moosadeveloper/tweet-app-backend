@@ -1,6 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+require("dotenv").config();  // Load .env file
 
-mongoose.connect(`mongodb://127.0.0.1:27017/miniproject`);
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ MongoDB Atlas Connected"))
+    .catch(err => console.log("❌ MongoDB Connection Error:", err));
 
 // Schema for User
 const userSchema = new mongoose.Schema({
